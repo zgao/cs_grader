@@ -10,7 +10,7 @@ class Problem < ActiveRecord::Base
   after_create :initialize_defaults
 
   #nothing for description
-  validates :name, presence: true, format: { with: /^[A-Za-z0-9_\ ]+$/ }
+  validates :name, presence: true, format: { with: /^[A-Za-z0-9_\ ]+$/ }, uniqueness: true
   validates :cs_class_id, presence: true
   validates :due_date, presence: true
   validates :time_limit, presence: true, inclusion: { in: (1..60) }

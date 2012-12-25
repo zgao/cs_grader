@@ -6,7 +6,7 @@ class CsClass < ActiveRecord::Base
   has_and_belongs_to_many :users
 
   validates :description, presence: true, length: { maximum: 3000 }
-  validates :name, presence: true, length: { maximum: 20 }
+  validates :name, presence: true, length: { maximum: 20 }, uniqueness: true
   validates :course_id, presence: true
 
   def has_user(user)
