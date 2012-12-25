@@ -1,0 +1,60 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li
+    = link_to @cs_class.name, cs_class_path(@cs_class)
+    %span.divider /
+  %li
+    = link_to 'Problems', cs_class_problems_path(@cs_class)
+    %span.divider /
+  %li.active= @problem.name
+
+:javascript
+  $(document).ready(function() { $('#solution_file').change(function() {
+    $('#photoCover').val($('#solution_file').val().replace("C:\\fakepath\\", ""));
+  });});
+
+= @problem.description
+
+%p
+
+.well.center
+  = form_for [@cs_class, @problem, @solution] do |f|
+    %legend Solution
+    = f.file_field :file, style: 'display:none'
+    .input-append
+      %input#photoCover{ class: 'input-large', type: 'text' }
+      %a.btn{ onclick: '$(\'input[id=solution_file]\').click();' } Browse
+    = f.submit 'Submit', class: 'btn btn-success'
+  - if current_user.admin? and not @problem.visible?
+    = form_for [@cs_class, @problem, @test_case], html: { multipart: true } do |f|
+      %legend Upload test case
+      .control-group
+        = f.label :input, class: 'control-label'
+        .controls
+          = f.file_field :input
+      .control-group
+        = f.label :output, class: 'control-label'
+        .controls
+          = f.file_field :output
+      .control-group.controls= f.submit 'Upload', class: 'btn btn-success'
+
+%p
+
+- @problem.solutions.where(user_id: current_user.id).each do |solution|
+  - if solution.tested?
+    = link_to "Solution #{solution.id}, submitted #{solution.created_at}, #{solution.test_case_ratio}", cs_class_problem_solution_path(@cs_class, @problem, solution)
+  - else
+    = link_to "Solution #{solution.id}, submitted #{solution.created_at}", cs_class_problem_solution_path(@cs_class, @problem, solution)
+  %br
+
+%p
+
+= link_to 'All solutions', cs_class_problem_solutions_path(@cs_class, @problem), class: 'btn'
+- if current_user.admin?
+  = link_to 'Test cases', cs_class_problem_test_cases_path(@cs_class, @problem), class: 'btn'
+  = link_to 'Edit problem', edit_cs_class_problem_path(@cs_class, @problem), class: 'btn btn-primary'

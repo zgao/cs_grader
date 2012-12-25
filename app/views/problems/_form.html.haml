@@ -1,0 +1,31 @@
+.container
+  .row
+    .span8.center
+      = form_for [@cs_class, @problem], :html => { :class => 'form-horizontal' } do |f|
+        - if @problem.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@problem.errors.count, "error")} prohibited this problem from being saved:"
+            %ul
+              - @problem.errors.full_messages.each do |msg|
+                %li= msg
+
+        %legend New problem
+
+        .control-group
+          = f.label :name, :class => 'control-label'
+          .controls
+            = f.text_field :name, :class => 'input-xxlarge'
+        .control-group
+          = f.label :description, :class => 'control-label'
+          .controls
+            = f.text_area :description, :class => 'input-xxlarge'
+        .control-group
+          = f.label :time_limit, :class => 'control-label'
+          .controls
+            = f.number_field :time_limit, :class => 'input-xxlarge'
+        .control-group
+          = f.label :due_date, :class => 'control-label'
+          .controls
+            = f.date_select :due_date, {}, { :class => 'span2' }
+        .control-group.controls
+          = f.submit 'Save', :class => 'btn btn-success'

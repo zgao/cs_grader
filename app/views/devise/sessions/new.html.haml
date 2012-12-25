@@ -1,0 +1,18 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li.active Login
+
+= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  %legend Sign in
+  = f.label :email
+  = f.email_field :email, :placeholder => "Email"
+  = f.label :password
+  = f.password_field :password, :placeholder => "password"
+  - if devise_mapping.rememberable?
+    = f.label(:remember_me, :class => "checkbox") do
+      = f.check_box :remember_me
+      = "Remember me"
+  = f.submit "Sign in", :class => "btn"
+= render "devise/shared/links"

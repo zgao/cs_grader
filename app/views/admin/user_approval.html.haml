@@ -1,0 +1,21 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    Administrative tasks
+    %span.divider /
+  %li.active User approval queue
+
+%table.table
+  %thead
+    %tr
+      %th User ID
+      %th Email
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.id
+        %td= user.email
+        %td= link_to 'Approve', admin_approve_user_path(user), :class => 'btn btn-success'

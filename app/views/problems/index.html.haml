@@ -1,0 +1,36 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li
+    = link_to @cs_class.name, cs_class_path(@cs_class)
+    %span.divider /
+  %li.active Problems
+
+%table.table
+  %tr
+    %th Name
+    %th Due date
+    %th Class
+    %th Best solution
+    %th
+    %th
+
+  - @problems.each do |problem|
+    %tr
+      %td= link_to problem.name, cs_class_problem_path(@cs_class, problem)
+      %td= problem.due_date
+      %td= @cs_class.name
+      %td TODO
+      /%td= @best_solutions[]
+      - if not problem.visible?
+        %td= link_to 'Make visible', cs_class_problem_make_visible_path(@cs_class, problem), :class => 'btn btn-success'
+      - else
+        %td
+      %td= link_to 'Delete', cs_class_problem_path(@cs_class, problem), :method => :delete, :class => 'btn btn-danger'
+
+- if current_user.admin?
+  = link_to 'New problem', new_cs_class_problem_path(@cs_class), :class => 'btn btn-success'

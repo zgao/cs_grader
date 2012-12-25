@@ -1,0 +1,19 @@
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Due date
+      %th Attempts
+      %th Best try
+      %th Best solution
+  %tbody
+    - problems.each do |problem, hash|
+      %tr
+        %td= link_to hash[:name], cs_class_problem_path(cs_class, problem)
+        %td= hash[:due_date]
+        %td= hash[:attempts]
+        %td= hash[:best_try]
+        - if hash[:best_solution].nil?
+          %td None
+        - else
+          %td= link_to 'View', cs_class_problem_solution_path(cs_class, problem, hash[:best_solution])

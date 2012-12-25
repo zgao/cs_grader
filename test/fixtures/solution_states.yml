@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  problem: 
+  solution: 
+  test_cases_passed: 1
+  test_cases_total: 1
+  comments: MyString
+
+two:
+  user: 
+  problem: 
+  solution: 
+  test_cases_passed: 1
+  test_cases_total: 1
+  comments: MyString

@@ -1,0 +1,2 @@
+module AllSolutionsHelper
+end

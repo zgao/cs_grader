@@ -1,0 +1,50 @@
+- if user_signed_in?
+  %ul.breadcrumb
+    %li.active Home
+
+  %script
+    - @cs_classes.each do |cs_class|
+      $('#class_id_#{cs_class.id} a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+      });
+
+  %ul.nav.nav-tabs
+    - first = true
+    - @cs_classes.each do |cs_class|
+      - if first
+        %li.active
+          %a{:href => "#class_id_#{cs_class.id}", :'data-toggle' => 'tab'}= cs_class.name
+      - else
+        %li
+          %a{:href => "#class_id_#{cs_class.id}", :'data-toggle' => 'tab'}= cs_class.name
+      - first = false
+
+  .tab-content
+    - first = true
+    - @cs_classes.each do |cs_class|
+      - if first
+        .tab-pane.active{id: "class_id_#{cs_class.id}"}
+          - if current_user.admin?
+            = render 'admin', cs_class: cs_class, problems: @problems[cs_class]
+          - else
+            = render 'user', cs_class: cs_class, problems: @problems[cs_class]
+      - else
+        .tab-pane{id: "class_id_#{cs_class.id}"}
+          - if current_user.admin?
+            = render 'admin', cs_class: cs_class, problems: @problems[cs_class]
+          - else
+            = render 'user', cs_class: cs_class, problems: @problems[cs_class]
+      - first = false
+- else
+  %h1.center Welcome to the NCSSM CS grader!
+  %p
+  %h2.center the Webassign for computer science
+  %p
+  .row
+    .span4
+      %h3.center get grades instantly
+    .span4
+      %h3.center track your grades
+    .span4
+      %h3.center detailed solutions

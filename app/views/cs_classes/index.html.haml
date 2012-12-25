@@ -1,0 +1,30 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li.active Classes
+
+%table.table
+  %tr
+    %th Class ID
+    %th Class name
+    - if current_user.admin?
+      %th
+      %th
+    - else
+      %th
+
+  - @cs_classes.each do |cs_class|
+    %tr
+      %td= cs_class.course_id
+      %td= link_to cs_class.name, cs_class
+      - if current_user.admin?
+        %td= link_to 'Edit', edit_cs_class_path(cs_class), class: 'btn'
+        %td= link_to 'Delete', cs_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+      - elsif @valid_classes_ids.include? cs_class.id
+        %td Joined
+      - elsif Request.where(:user_id => current_user.id, :cs_class_id => cs_class.id).empty?
+        %td= link_to 'Join', cs_class_join_path(cs_class), class: 'btn btn-success'
+
+- if current_user.admin?
+  = link_to 'New class', new_cs_class_path, :class => 'btn btn-success'

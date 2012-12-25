@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  problem: 
+  validated: false
+  test_cases_passed: 1
+
+two:
+  user: 
+  problem: 
+  validated: false
+  test_cases_passed: 1

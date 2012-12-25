@@ -1,0 +1,42 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li.active= @cs_class.name
+
+.well= @cs_class.description
+
+:javascript
+  $('#current_problems a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+  $('#previous_problems a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+
+%ul.nav.nav-tabs
+  %li.active
+    %a{:href => '#current_problems', :'data-toggle' => 'tab'} Current problems
+  %li
+    %a{:href => '#previous_problems', :'data-toggle' => 'tab'} Previous problems
+
+.tab-content
+  .tab-pane.active#current_problems
+    - if @current_problems.size > 0
+      = render 'problems', problems: @current_problems, solutions: @current_solutions
+    - else
+      %h6.center No problems available.
+  .tab-pane#previous_problems
+    - if @previous_problems.size > 0
+      = render 'problems', problems: @previous_problems, solutions: @previous_solutions
+    - else
+      %h6.center No problems available.
+
+- if current_user.admin?
+  = link_to 'New problem', new_cs_class_problem_path(@cs_class), :class => 'btn btn-success'
+  = link_to 'Edit class', edit_cs_class_path(@cs_class), :class => 'btn'

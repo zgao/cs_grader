@@ -1,0 +1,20 @@
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Due date
+      %th # solutions
+      %th # correct
+      %th Avg cases
+      %th Success rate
+      %th
+  %tbody
+    - problems.each do |problem, hash|
+      %tr
+        %td= link_to hash[:name], cs_class_problem_path(cs_class, problem)
+        %td= hash[:due_date]
+        %td= hash[:number_solutions]
+        %td= hash[:number_correct_solutions]
+        %td= "#{number_with_precision(hash[:average_test_cases], precision: 2)} / #{problem.test_cases.count}"
+        %td= "#{number_with_precision(hash[:success_rate], precision: 2)}%"
+        %td= link_to 'Solutions', cs_class_problem_solutions_path(cs_class, problem)

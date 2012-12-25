@@ -1,0 +1,33 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li
+    = link_to @cs_class.name, cs_class_path(@cs_class)
+    %span.divider /
+  %li
+    = link_to 'Problems', cs_class_problems_path(@cs_class)
+    %span.divider /
+  %li
+    = link_to @problem.name, cs_class_problem_path(@cs_class, @problem)
+    %span.divider /
+  %li.active Solutions
+
+%table.table
+  %tr
+    %th ID
+    %th Time
+    %th Test cases
+
+  - @solutions.each do |solution|
+    %tr
+      %td= link_to solution.id, cs_class_problem_solution_path(@cs_class, @problem, solution)
+      %td= solution.created_at
+      %td= "#{solution.test_cases_passed} / #{@test_cases_count}"
+
+%br
+
+= link_to 'Submit again', cs_class_problem_path(@cs_class, @problem), class: 'btn btn-success'

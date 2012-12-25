@@ -1,0 +1,46 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li
+    = link_to @problem.cs_class.name, cs_class_path(@problem.cs_class)
+    %span.divider /
+  %li
+    = link_to 'Problems', cs_class_problems_path(@problem.cs_class)
+    %span.divider /
+  %li
+    = link_to @problem.name, cs_class_problem_path(@problem.cs_class, @problem)
+    %span.divider /
+  %li
+    = link_to 'Solutions', cs_class_problem_solutions_path(@problem.cs_class, @problem)
+    %span.divider /
+  %li.active= "Solution #{@solution.id}"
+
+.center
+  %b STATUS:
+
+  - if @solution.tested?
+    - if @solution.validated?
+      Validated
+    - else
+      = "Passed: #{@solution.test_cases_passed} out of #{@problem.test_cases.count}"
+  - else
+    Has not been tested.
+  - unless @user.nil?
+    %p
+    = "Belongs to #{@user.email}"
+  %p
+  = link_to 'Download code', @solution.file.url, class: 'btn btn-success'
+
+%p
+
+%pre= @solution.comments
+
+%p
+
+%pre.prettyprint.linenums
+  - File.open(@solution.file.path, "r").each_line do |line|
+    = line

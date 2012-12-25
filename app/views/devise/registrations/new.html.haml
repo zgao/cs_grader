@@ -1,0 +1,18 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li.active Registration
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  %fieldset
+    %legend Sign up
+    = f.label :email
+    = f.email_field :email, :placeholder => "Email"
+    = f.label :password
+    = f.password_field :password
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+  = f.submit "Sign up", :class => "btn"
+= render "devise/shared/links"

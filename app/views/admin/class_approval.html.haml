@@ -1,0 +1,25 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    Administrative tasks
+    %span.divider /
+  %li.active Class approval queue
+
+%table.table
+  %thead
+    %tr
+      %th User ID
+      %th Email
+      %th Class ID
+      %th Class name
+      %th
+  %tbody
+    - @requests.each do |req|
+      %tr
+        %td= req.user.id
+        %td= req.user.email
+        %td= req.cs_class.course_id
+        %td= req.cs_class.name
+        %td= link_to 'Approve', admin_class_approved_path(req.user.id, req.cs_class.id), :class => 'btn btn-success'
