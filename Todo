@@ -1,0 +1,6 @@
+>> Close off unwanted routes
+>> Partialize additional parts of views
+>> Cleanly delete "all_solutions" from the project
+>> Websockets: Faye or Juggernaut
+> Improve file upload UI
+> Improve problem list UI

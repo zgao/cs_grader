@@ -1,15 +1,15 @@
 class TestCasesController < ApplicationController
   before_filter :initialize_parents
-  before_filter :initialize_test_case, :only => [:show, :destroy]
+  before_filter :initialize_test_case, only: [:show, :destroy]
   before_filter :require_login_and_dead_problem
-  before_filter :require_admin, :only => [:create, :destroy]
+  before_filter :require_admin, only: [:create, :destroy]
 
   def index
-    @test_cases = TestCase.where(:cs_class_id => @cs_class.id, :problem_id => @problem.id)
+    @test_cases = TestCase.where(cs_class_id: @cs_class.id, problem_id: @problem.id)
 
     respond_to do |format|
       format.html
-      format.json { render :json => @test_cases }
+      format.json { render json: @test_cases }
     end
   end
 
@@ -29,7 +29,7 @@ class TestCasesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @test_case }
+      format.json { render json: @test_case }
     end
   end
 
@@ -39,11 +39,11 @@ class TestCasesController < ApplicationController
     respond_to do |format|
       if @test_case.save
         format.html { redirect_to cs_class_problem_test_case_url(@cs_class, @problem, @test_case),
-                      :notice => 'Test case successfully uploaded.' }
-        format.json { render :json => @test_case }
+                      notice: 'Test case successfully uploaded.' }
+        format.json { render json: @test_case }
       else
-        format.html { render :action => 'new' }
-        format.json { render :json => @test_case.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json { render json: @test_case.errors, status: :unprocessable_entity }
       end
     end
   end

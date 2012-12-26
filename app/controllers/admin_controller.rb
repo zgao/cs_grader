@@ -6,16 +6,16 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @users }
+      format.json { render json: @users }
     end
   end
 
   def user_approval
-    @users = User.where(:approved => false)
+    @users = User.where(approved: false)
 
     respond_to do |format|
       format.html
-      format.json { render :json => @users }
+      format.json { render json: @users }
     end
   end
 
@@ -25,7 +25,7 @@ class AdminController < ApplicationController
     @user.save!
 
     respond_to do |format|
-      format.html { redirect_to :action => 'user_approval', :controller => 'admin' }
+      format.html { redirect_to action: 'user_approval', controller: 'admin' }
     end
   end
 
@@ -34,7 +34,7 @@ class AdminController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to :action => 'user_list', :controller => 'admin' }
+      format.html { redirect_to action: 'user_list', controller: 'admin' }
     end
   end
 
@@ -43,18 +43,18 @@ class AdminController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @requests }
+      format.json { render json: @requests }
     end
   end
 
   def class_approved
     @user = User.find(params[:id])
     @class = CsClass.find(params[:cs_class_id])
-    Request.where(:user_id => @user.id, :cs_class_id => @class.id).each {|x| x.destroy}
+    Request.where(user_id: @user.id, cs_class_id: @class.id).each {|x| x.destroy}
     @class.users << @user
 
     respond_to do |format|
-      format.html { redirect_to :action => 'class_approval', :controller => 'admin' }
+      format.html { redirect_to action: 'class_approval', controller: 'admin' }
     end
   end
 

@@ -7,7 +7,7 @@ class AllSolutionsController < ApplicationController
       if current_user.admin?
         x.solutions.order('test_cases_passed desc').first
       else
-        x.solutions.where(:user_id => current_user.id).order('test_cases_passed desc').first
+        x.solutions.where(user_id: current_user.id).order('test_cases_passed desc').first
       end
     end
 

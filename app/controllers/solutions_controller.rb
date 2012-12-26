@@ -5,7 +5,7 @@ class SolutionsController < ApplicationController
   before_filter :require_admin_on_foreign, only: [:show]
 
   def index
-    @solutions = Solution.where(:user_id => current_user.id, :problem_id => params[:problem_id])
+    @solutions = Solution.where(user_id: current_user.id, problem_id: params[:problem_id])
     @test_cases_count = @problem.test_cases.count
 
     respond_to do |format|
