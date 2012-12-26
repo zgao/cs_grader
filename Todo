@@ -1,4 +1,3 @@
->> Close off unwanted routes
 >> Partialize additional parts of views
 >> Cleanly delete "all_solutions" from the project
 >> Websockets: Faye or Juggernaut

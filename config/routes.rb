@@ -1,14 +1,14 @@
 CsGrader::Application.routes.draw do
   devise_for :users
 
-  root :to => 'home#index'
+  root to: 'home#index'
 
   resources :cs_classes do
     resources :problems do
       get 'make_visible'
 
-      resources :solutions
-      resources :test_cases
+      resources :solutions, only: [:index, :show, :create]
+      resources :test_cases, only: [:index, :show, :create, :destroy]
     end
 
     get 'join'
@@ -18,10 +18,10 @@ CsGrader::Application.routes.draw do
 
   match 'cs_classes/:id/join' => 'cs_classes#join'
 
-  match 'admin/class_approval' => 'admin#class_approval', :as => 'admin_class_approval'
-  match 'admin/:id/class_approved/:cs_class_id' => 'admin#class_approved', :as => 'admin_class_approved'
-  match 'admin/user_approval' => 'admin#user_approval', :as => 'admin_user_approval'
-  match 'admin/:id/approve_user' => 'admin#approve_user', :as => 'admin_approve_user'
+  match 'admin/class_approval' => 'admin#class_approval', as: 'admin_class_approval'
+  match 'admin/:id/class_approved/:cs_class_id' => 'admin#class_approved', as: 'admin_class_approved'
+  match 'admin/user_approval' => 'admin#user_approval', as: 'admin_user_approval'
+  match 'admin/:id/approve_user' => 'admin#approve_user', as: 'admin_approve_user'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
