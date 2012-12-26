@@ -1,1 +1,36 @@
+%ul.breadcrumb
+  %li
+    = link_to 'Home', root_path
+    %span.divider /
+  %li
+    = link_to 'Classes', cs_classes_path
+    %span.divider /
+  %li
+    = link_to @cs_class.name, cs_class_path(@cs_class)
+    %span.divider /
+  %li
+    = link_to 'Problems', cs_class_problems_path(@cs_class)
+    %span.divider /
+  %li
+    = link_to @problem.name, cs_class_problem_path(@cs_class, @problem)
+    %span.divider /
+  %li.active Test cases
 
+- @lines.each do |test_case, hash|
+  %h2= "Input #{test_case.id}:"
+  %p
+  %pre
+    - hash[:input].each do |line|
+      - if line == '...'
+        = link_to line, test_case.input.url
+      - else
+        = line
+  %p
+  %h2= "Output #{test_case.id}:"
+  %p
+  %pre
+    - hash[:output].each do |line|
+      - if line == '...'
+        = link_to line, test_case.output.url
+      - else
+        = line

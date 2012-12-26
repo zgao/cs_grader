@@ -2,10 +2,29 @@ class TestCasesController < ApplicationController
   before_filter :initialize_parents
   before_filter :initialize_test_case, only: [:show, :destroy]
   before_filter :require_login_and_dead_problem
+  before_filter :require_admin_if_invisible
   before_filter :require_admin, only: [:create, :destroy]
 
   def index
-    @test_cases = TestCase.where(cs_class_id: @cs_class.id, problem_id: @problem.id)
+    @test_cases = TestCase.where(problem_id: @problem.id)
+
+    @lines = {}
+
+    @test_cases.each do |test_case|
+      input_file = File.foreach(test_case.input.path).take(11)
+      input_lines = if input_file.size == 11
+                      input_file[0...10] + ["..."]
+                    else
+                      input_file
+                    end
+      output_file = File.foreach(test_case.output.path).take(11)
+      output_lines = if output_file.size == 11
+                       output_file[0...10] + ["..."]
+                     else
+                       output_file
+                     end
+      @lines[test_case] = { input: input_lines, output: output_lines }
+    end
 
     respond_to do |format|
       format.html
@@ -57,7 +76,7 @@ class TestCasesController < ApplicationController
     end
   end
 
-private
+  private
 
   def initialize_parents
     @cs_class = CsClass.find(params[:cs_class_id])
@@ -69,8 +88,11 @@ private
   end
 
   def require_login_and_dead_problem
-    problem = Problem.find(params[:problem_id])
-    redirect_to new_user_session_url unless (user_signed_in? and (current_user.admin? or problem.dead))
+    redirect_to new_user_session_url unless (user_signed_in? and (current_user.admin? or @problem.dead))
+  end
+
+  def require_admin_if_invisible
+    redirect_to root_url unless (user_signed_in? and (current_user.admin? or @problem.visible?))
   end
 
   def require_admin
