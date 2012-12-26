@@ -1,14 +1,4 @@
-%ul.breadcrumb
-  %li
-    = link_to 'Home', root_path
-    %span.divider /
-  %li
-    = link_to 'Classes', cs_classes_path
-    %span.divider /
-  %li
-    = link_to @cs_class.name, cs_class_path(@cs_class)
-    %span.divider /
-  %li.active Problems
+= render 'shared/breadcrumbs', mode: :index, depth: :problem, cs_class: @cs_class
 
 %table.table
   %tr

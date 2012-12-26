@@ -14,8 +14,6 @@ CsGrader::Application.routes.draw do
     get 'join'
   end
 
-  match 'solutions' => 'all_solutions#index'
-
   match 'cs_classes/:id/join' => 'cs_classes#join'
 
   match 'admin/class_approval' => 'admin#class_approval', as: 'admin_class_approval'

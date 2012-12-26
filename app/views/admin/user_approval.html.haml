@@ -1,11 +1,4 @@
-%ul.breadcrumb
-  %li
-    = link_to 'Home', root_path
-    %span.divider /
-  %li
-    Administrative tasks
-    %span.divider /
-  %li.active User approval queue
+= render 'shared/breadcrumbs', mode: :admin_user_approval
 
 %table.table
   %thead

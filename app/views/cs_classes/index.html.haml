@@ -1,15 +1,10 @@
-%ul.breadcrumb
-  %li
-    = link_to 'Home', root_path
-    %span.divider /
-  %li.active Classes
+= render 'shared/breadcrumbs', mode: :index, depth: :cs_class
 
 %table.table
   %tr
     %th Class ID
     %th Class name
     - if current_user.admin?
-      %th
       %th
     - else
       %th
@@ -19,8 +14,9 @@
       %td= cs_class.course_id
       %td= link_to cs_class.name, cs_class
       - if current_user.admin?
-        %td= link_to 'Edit', edit_cs_class_path(cs_class), class: 'btn'
-        %td= link_to 'Delete', cs_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+        %td
+          = link_to 'Edit', edit_cs_class_path(cs_class), class: 'btn'
+          = link_to 'Delete', cs_class, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
       - elsif @valid_classes_ids.include? cs_class.id
         %td Joined
       - elsif Request.where(:user_id => current_user.id, :cs_class_id => cs_class.id).empty?

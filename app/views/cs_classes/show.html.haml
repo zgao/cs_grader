@@ -1,11 +1,4 @@
-%ul.breadcrumb
-  %li
-    = link_to 'Home', root_path
-    %span.divider /
-  %li
-    = link_to 'Classes', cs_classes_path
-    %span.divider /
-  %li.active= @cs_class.name
+= render 'shared/breadcrumbs', mode: :show, depth: :cs_class, cs_class: @cs_class
 
 .well= @cs_class.description
 

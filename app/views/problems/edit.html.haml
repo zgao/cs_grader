@@ -1,7 +1,7 @@
-%h1 Editing problem
+= render 'shared/breadcrumbs', mode: :edit, depth: :problem, cs_class: @cs_class, problem: @problem, terminal_string: 'Edit problem'
 
 = render 'form'
 
-= link_to 'Show', @problem
+= link_to 'Show', [@cs_class, @problem]
 \|
-= link_to 'Back', problems_path
+= link_to 'Back', cs_class_problems_path(@cs_class)

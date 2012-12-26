@@ -1,0 +1,60 @@
+/ edit, new, show, index, create, update, destroy
+/ params: mode, depth, terminal_string, cs_class, problem, solution, test_case
+
+- mode ||= nil
+- depth ||= nil
+- terminal_string ||= nil
+- cs_class ||= nil
+- problem ||= nil
+- solution ||= nil
+- test_case ||= nil
+
+- directory = [[ 'Home', root_path ]]
+- if cs_class.nil?
+  - if mode == :index and depth == :cs_class
+    - directory << [ 'Classes', cs_classes_path ]
+  - elsif mode == :admin_user_approval or mode == :admin_class_approval
+    - directory << ['Administrative tasks', :no_link]
+    - if mode == :admin_user_approval
+      - directory << ['User approval queue', :no_link]
+    - else
+      - directory << ['Class approval queue', :no_link]
+- else
+  - directory << [ 'Classes', cs_classes_path ]
+  - directory << [ cs_class.name, cs_class_path(cs_class) ]
+  - if problem.nil?
+    - if mode == :index and depth == :problem
+      - directory << ['Problems', cs_class_problems_path(cs_class)]
+  - else
+    - directory << ['Problems', cs_class_problems_path(cs_class)]
+    - directory << [problem.name, cs_class_problem_path(cs_class, problem)]
+    - if solution.nil?
+      - if mode == :index and depth == :solution
+        - directory << ['Solutions', cs_class_problem_solutions_path(cs_class, problem)]
+      - elsif test_case.nil?
+        - if mode == :index and depth == :test_case
+          - directory << ['Test cases', cs_class_problem_test_cases_path(cs_class, problem)]
+      - else
+        - directory << ['Test cases', cs_class_problem_test_cases_path(cs_class, problem)]
+        - directory << ["Test case #{test_case.id}", cs_class_problem_test_case_path(cs_class, problem, test_case)]
+    - else
+      - directory << ['Solutions', cs_class_problem_solutions_path(cs_class, problem)]
+      - directory << ["Solution #{solution.id}", cs_class_problem_solution_path(cs_class, problem, solution)]
+
+- unless terminal_string.nil?
+  - directory << [terminal_string, :no_link]
+
+%ul.breadcrumb
+  - last = directory.last
+  - directory.each do |key, value|
+    - if [key, value] != last
+      - if value == :no_link
+        %li
+          = key
+          %span.divider /
+      - else
+        %li
+          = link_to key, value
+          %span.divider /
+    - else
+      %li.active= key

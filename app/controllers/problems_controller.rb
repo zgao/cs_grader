@@ -2,7 +2,7 @@ class ProblemsController < ApplicationController
   before_filter :initialize_parents
   before_filter :initialize_problem, except: [:new, :create, :index, :make_visible]
   before_filter :require_login
-  before_filter :require_admin_if_invisible, except: [:index]
+  before_filter :require_admin_if_invisible, except: [:new, :index]
   before_filter :require_admin, except: [:index, :show]
 
   def index
@@ -36,7 +36,7 @@ class ProblemsController < ApplicationController
   end
 
   def new
-    @problem = Problem.new(cs_class: @cs_class)
+    @problem = Problem.new
 
     respond_to do |format|
       format.html # new.html.erb
