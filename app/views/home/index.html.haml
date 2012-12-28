@@ -22,14 +22,19 @@
   .tab-content
     - first = true
     - @cs_classes.each do |cs_class|
+      %p
       - if first
         .tab-pane.active{id: "class_id_#{cs_class.id}"}
+          .center= link_to 'Main page', cs_class, class: 'btn btn-primary'
+          %p
           - if current_user.admin?
             = render 'admin', cs_class: cs_class, problems: @problems[cs_class]
           - else
             = render 'user', cs_class: cs_class, problems: @problems[cs_class]
       - else
         .tab-pane{id: "class_id_#{cs_class.id}"}
+          .center= link_to 'Main page', cs_class, class: 'btn btn-primary'
+          %p
           - if current_user.admin?
             = render 'admin', cs_class: cs_class, problems: @problems[cs_class]
           - else

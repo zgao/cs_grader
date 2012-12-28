@@ -19,5 +19,9 @@
         - else
           %td= link_to solution_state.solution.id, cs_class_problem_solution_path(@cs_class, problem, solution_state.solution)
           %td= solution_state.test_cases_ratio
-        - if current_user.admin? and not problem.visible?
-          %td= link_to 'Make visible', cs_class_problem_make_visible_path(@cs_class, problem), class: 'btn btn-success'
+        - if current_user.admin?
+          %td
+            - unless problem.visible?
+              = link_to 'Make visible', cs_class_problem_make_visible_path(@cs_class, problem), class: 'btn btn-success'
+            = link_to 'Edit', edit_cs_class_problem_path(@cs_class, problem), class: 'btn'
+            = link_to 'Delete', cs_class_problem_path(@cs_class, problem), method: :delete, class: 'btn btn-danger'

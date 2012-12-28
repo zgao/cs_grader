@@ -8,6 +8,7 @@
       %th Avg cases
       %th Success rate
       %th
+      %th
   %tbody
     - problems.each do |problem, hash|
       %tr
@@ -18,3 +19,6 @@
         %td= "#{number_with_precision(hash[:average_test_cases], precision: 2)} / #{problem.test_cases.count}"
         %td= "#{number_with_precision(hash[:success_rate], precision: 2)}%"
         %td= link_to 'Solutions', cs_class_problem_solutions_path(cs_class, problem)
+        %td
+          = link_to 'Edit', edit_cs_class_problem_path(cs_class, problem), class: 'btn'
+          = link_to 'Delete', cs_class_problem_path(cs_class, problem), method: :delete, class: 'btn btn-danger'
