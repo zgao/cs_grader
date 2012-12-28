@@ -21,12 +21,12 @@
 .tab-content
   .tab-pane.active#current_problems
     - if @current_problems.size > 0
-      = render 'problems', problems: @current_problems, solutions: @current_solutions
+      = render 'problems', cs_class: @cs_class, problems: @current_problems, solutions: @current_solutions
     - else
       %h6.center No problems available.
   .tab-pane#previous_problems
     - if @previous_problems.size > 0
-      = render 'problems', problems: @previous_problems, solutions: @previous_solutions
+      = render 'problems', cs_class: @cs_class, problems: @previous_problems, solutions: @previous_solutions
     - else
       %h6.center No problems available.
 

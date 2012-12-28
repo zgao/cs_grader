@@ -1,5 +1,5 @@
 = render 'shared/breadcrumbs', mode: :new, depth: :problem, cs_class: @cs_class, terminal_string: 'New problem'
 
-= render 'form'
+= render 'form', cs_class: @cs_class, problem: @problem
 
 = link_to 'Back', cs_class_problems_path(@cs_class)

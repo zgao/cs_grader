@@ -7,13 +7,13 @@
       %th Best try
       %th Best solution
   %tbody
-    - problems.each do |problem, hash|
+    - problems.each do |problem|
       %tr
-        %td= link_to hash[:name], cs_class_problem_path(cs_class, problem)
-        %td= hash[:due_date]
-        %td= hash[:attempts]
-        %td= hash[:best_try]
-        - if hash[:best_solution].nil?
+        %td= link_to problem.name, cs_class_problem_path(cs_class, problem)
+        %td= problem.due_date_display
+        %td= problem.attempts(current_user)
+        %td= problem.best_try(current_user)
+        - if problem.user_solution_state(current_user).nil?
           %td None
         - else
-          %td= link_to 'View', cs_class_problem_solution_path(cs_class, problem, hash[:best_solution])
+          %td= link_to 'View', cs_class_problem_solution_path(cs_class, problem, problem.best_solution(current_user))

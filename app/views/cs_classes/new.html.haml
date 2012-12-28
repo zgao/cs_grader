@@ -1,5 +1,5 @@
 = render 'shared/breadcrumbs', mode: :new, depth: :cs_class, terminal_string: 'New class'
 
-= render 'form'
+= render 'form', cs_class: @cs_class
 
 = link_to 'Back', cs_classes_path

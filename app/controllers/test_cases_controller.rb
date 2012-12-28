@@ -61,7 +61,7 @@ class TestCasesController < ApplicationController
                       notice: 'Test case successfully uploaded.' }
         format.json { render json: @test_case }
       else
-        format.html { render action: 'new' }
+        format.html { render 'new' }
         format.json { render json: @test_case.errors, status: :unprocessable_entity }
       end
     end

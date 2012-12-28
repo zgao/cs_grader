@@ -31,7 +31,7 @@ class CsClassesController < ApplicationController
     @cs_class = CsClass.find(params[:cs_class_id])
     @user = current_user
     @request = Request.new(cs_class: @cs_class, user: current_user)
-    @request.save
+    @request.save!
 
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'A request has been made to join the class.' }
@@ -59,7 +59,7 @@ class CsClassesController < ApplicationController
         format.html { redirect_to @cs_class, notice: 'Class was successfully created.' }
         format.json { render json: @cs_class, status: :created, location: @cs_class }
       else
-        format.html { render action: 'new' }
+        format.html { render 'new' }
         format.json { render json: @cs_class.errors, status: :unprocessable_entity }
       end
     end
@@ -71,7 +71,7 @@ class CsClassesController < ApplicationController
         format.html { redirect_to @cs_class, notice: 'Class was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render 'edit' }
         format.json { render json: @cs_class.errors, status: :unprocessable_entity }
       end
     end

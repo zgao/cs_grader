@@ -15,14 +15,10 @@ class SolutionsController < ApplicationController
   end
 
   def show
-    @solution = Solution.find(params[:id])
-    if @solution.user_id != current_user.id
-      if current_user.admin?
-        @user = @solution.user
-      else
-        redirect_to cs_class_problem_solutions_url(@problem.cs_class, @problem)
-        return
-      end
+    if current_user.admin?
+      @user = @solution.user
+    else
+      @solution = current_user.solutions.find(params[:id])
     end
 
     respond_to do |format|

@@ -8,11 +8,20 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :admin
 
+  has_many :solutions
   has_many :solution_states
 
   has_and_belongs_to_many :cs_classes
 
   after_create :initialize_defaults
+
+  def visible_cs_classes
+    if self.admin?
+      CsClass.all
+    else
+      self.cs_classes
+    end
+  end
 
   def active_for_authentication?
     super && approved?

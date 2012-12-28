@@ -21,8 +21,52 @@ class Problem < ActiveRecord::Base
   end
 
   def user_solution_state(user)
-    ret = SolutionState.where(user_id: user.id, problem_id: self.id)
+    ret = user.solution_states.where(problem_id: self.id)
     ret.nil? ? nil : ret.first
+  end
+
+  def due_date_display
+    self.due_date.to_date
+  end
+
+  def number_of_solutions
+    self.solutions.count
+  end
+
+  def number_of_correct_solutions
+    self.solutions.where(validated: true).count
+  end
+
+  def average_test_cases
+    Float(self.solutions.sum(:test_cases_passed)) / self.number_of_solutions
+  end
+
+  def success_rate
+    100 * Float(self.number_of_correct_solutions) / self.number_of_solutions
+  end
+
+  def attempts(user)
+    self.solutions.where(user_id: user.id).count
+  end
+
+  def solution_exists?(user)
+    self.attempts > 0
+  end
+
+  def best_try(user)
+    if self.user_solution_state(user).nil?
+      return 'None'
+    else
+      return self.user_solution_state(user).test_cases_ratio
+    end
+  end
+
+  def best_solution(user)
+    if self.user_solution_state(user).nil?
+      return nil
+    else
+      return self.user_solution_state(user).solution
+    end
   end
 
 private

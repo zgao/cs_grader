@@ -1,12 +1,12 @@
 .container
   .row
     .span8.center
-      = form_for @cs_class, :html => { :class => 'form-horizontal' } do |f|
-        - if @cs_class.errors.any?
+      = form_for cs_class, :html => { :class => 'form-horizontal' } do |f|
+        - if cs_class.errors.any?
           #error_explanation
-            %h2= "#{pluralize(@cs_class.errors.count, "error")} prohibited this cs_class from being saved:"
+            %h2= "#{pluralize(cs_class.errors.count, "error")} prohibited this cs_class from being saved:"
             %ul
-              - @cs_class.errors.full_messages.each do |msg|
+              - cs_class.errors.full_messages.each do |msg|
                 %li= msg
         %legend New class
         .control-group

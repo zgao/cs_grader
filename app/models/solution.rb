@@ -7,6 +7,8 @@ class Solution < ActiveRecord::Base
   belongs_to :user
   belongs_to :problem
 
+  delegate :time_limit, to: :problem, prefix: true
+
   after_create :initialize_defaults
   after_create :test_solution
 
@@ -27,14 +29,14 @@ class Solution < ActiveRecord::Base
         solution_state.solution = self
         solution_state.test_cases_passed = self.test_cases_passed
         solution_state.comments = self.comments
-        solution_state.save
+        solution_state.save!
       else
         solution_state = solution_state.first
         if self.test_cases_passed > solution_state.test_cases_passed
           solution_state.solution = self
           solution_state.test_cases_passed = self.test_cases_passed
           solution_state.comments = self.comments
-          solution_state.save
+          solution_state.save!
         end
       end
     end

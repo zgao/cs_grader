@@ -52,7 +52,7 @@ class GradingJob < Struct.new(:solution)
       puts "Compiled."
       system "cp #{@input_path} #{@file_dir}/input.in"
       puts "Copied file."
-      times = Benchmark.measure { run_as "timeout #{solution.problem.time_limit} ./#{solution.id}.out" }
+      times = Benchmark.measure { run_as "timeout #{solution.problem_time_limit} ./#{solution.id}.out" }
       system "cp #{@output_path} #{@file_dir}/compare.out"
       correct = FileUtils.compare_file("output.out", 'compare.out') ? 1 : 0
       if correct == 1
@@ -63,7 +63,7 @@ class GradingJob < Struct.new(:solution)
         solution.comments += "failed #{@test_case.id}, used #{times.real}s\n"
       end
       @test_cases_passed += correct
-    rescue Exception
+    rescue StandardError
       puts "failed #{@test_case.id}, serious problem"
       solution.comments += "failed #{@test_case.id}, serious problem\n"
     end
@@ -75,7 +75,7 @@ class GradingJob < Struct.new(:solution)
       puts "In working directory: #{@file_dir}"
       system "cp #{@input_path} #{@file_dir}/input.in"
       puts "Copied file."
-      times = Benchmark.measure { run_as "timeout #{solution.problem.time_limit} java Main" }
+      times = Benchmark.measure { run_as "timeout #{solution.problem_time_limit} java Main" }
       system "cp #{@output_path} #{@file_dir}/compare.out"
       correct = FileUtils.compare_file("output.out", 'compare.out') ? 1 : 0
       if correct == 1
@@ -86,7 +86,7 @@ class GradingJob < Struct.new(:solution)
         solution.comments += "failed #{@test_case.id}, used #{times.real}s\n"
       end
       @test_cases_passed += correct
-    rescue Exception
+    rescue StandardError
       puts "failed #{@test_case.id}, serious problem"
       solution.comments += "failed #{@test_case.id}, serious problem\n"
     end

@@ -27,7 +27,7 @@ class ProblemsController < ApplicationController
 
   def make_visible
     @problem.visible = true
-    @problem.save
+    @problem.save!
 
     respond_to do |format|
       format.html { redirect_to cs_class_problems_url(@cs_class) }
@@ -51,11 +51,11 @@ class ProblemsController < ApplicationController
     @problem = @cs_class.problems.new(params[:problem])
 
     respond_to do |format|
-      if @problem.save
+      if @problem.save!
         format.html { redirect_to cs_class_problem_url(@cs_class, @problem), notice: 'Problem was successfully created.' }
         format.json { render json: @problem, status: :created, location: @problem }
       else
-        format.html { render action: "new" }
+        format.html { render 'new' }
         format.json { render json: @problem.errors, status: :unprocessable_entity }
       end
     end
@@ -67,7 +67,7 @@ class ProblemsController < ApplicationController
         format.html { redirect_to @problem, notice: 'Problem was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render 'edit' }
         format.json { render json: @problem.errors, status: :unprocessable_entity }
       end
     end
