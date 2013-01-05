@@ -29,8 +29,7 @@ class CsClassesController < ApplicationController
 
   def join
     @cs_class = CsClass.find(params[:cs_class_id])
-    @user = current_user
-    @request = Request.new(cs_class: @cs_class, user: current_user)
+    @request = current_user.requests.new(cs_class: @cs_class)
     @request.save!
 
     respond_to do |format|

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :admin
 
   has_many :solutions
+  has_many :requests
   has_many :solution_states
 
   has_and_belongs_to_many :cs_classes
