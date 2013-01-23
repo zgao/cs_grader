@@ -2,7 +2,7 @@ class ProblemsController < ApplicationController
   before_filter :initialize_parents
   before_filter :initialize_problem, except: [:new, :create, :index, :make_visible]
   before_filter :require_login
-  before_filter :require_admin_if_invisible, except: [:new, :index]
+  before_filter :require_admin_if_invisible, except: [:new, :create, :index]
   before_filter :require_admin, except: [:index, :show]
 
   def index
@@ -49,6 +49,7 @@ class ProblemsController < ApplicationController
 
   def create
     @problem = @cs_class.problems.new(params[:problem])
+    @problem.visible = false
 
     respond_to do |format|
       if @problem.save!
@@ -97,7 +98,7 @@ private
   end
 
   def require_admin_if_invisible
-    redirect_to cs_class_problems_path(@cs_class) unless (@problem.visible? or current_user.admin?)
+    redirect_to cs_class_problems_path(@cs_class) unless (current_user.admin? or @problem.visible)
   end
 
   def require_admin

@@ -1,6 +1,6 @@
 = render 'shared/breadcrumbs', mode: :edit, depth: :problem, cs_class: @cs_class, problem: @problem, terminal_string: 'Edit problem'
 
-= render 'form'
+= render 'form', cs_class: @cs_class, problem: @problem
 
 = link_to 'Show', [@cs_class, @problem]
 \|

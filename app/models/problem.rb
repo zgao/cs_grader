@@ -14,7 +14,7 @@ class Problem < ActiveRecord::Base
   validates :cs_class_id, presence: true
   validates :due_date, presence: true
   validates :time_limit, presence: true, inclusion: { in: (1..60) }
-  validates :visible, presence: true
+  validates :visible, inclusion: { in: [true, false] }
 
   def dead
     self.due_date < DateTime.now
@@ -66,6 +66,14 @@ class Problem < ActiveRecord::Base
       return nil
     else
       return self.user_solution_state(user).solution
+    end
+  end
+
+  def available_solutions(user)
+    if user.admin?
+      self.solutions
+    else
+      self.solutions.where(user_id: user.id)
     end
   end
 

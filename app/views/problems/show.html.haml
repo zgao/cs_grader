@@ -32,7 +32,7 @@
 
 %p
 
-- @problem.solutions.where(user_id: current_user.id).each do |solution|
+- @problem.available_solutions(current_user).each do |solution|
   - if solution.tested?
     = link_to "Solution #{solution.id}, submitted #{solution.created_at}, #{solution.test_case_ratio}", cs_class_problem_solution_path(@cs_class, @problem, solution)
   - else

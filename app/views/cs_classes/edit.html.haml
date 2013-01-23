@@ -1,6 +1,6 @@
 = render 'shared/breadcrumbs', mode: :edit, depth: :cs_class, cs_class: @cs_class, terminal_string: 'Edit class'
 
-= render 'form'
+= render 'form', cs_class: @cs_class
 
 = link_to 'Show', @cs_class
 \|
